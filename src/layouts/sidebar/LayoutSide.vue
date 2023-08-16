@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { asyncRoutes } from '@/router/routes'
 import LayoutMenuItem from './LayoutMenuItem.vue'
 import { useLayoutStore } from '@/stores/layout'
 import { computed } from 'vue'
+import { useRouter } from 'vue-router';
 
 const store = useLayoutStore()
 const collapseWidth = computed(() => (store.collapse ? ' w-20' : 'w-64'))
@@ -15,7 +15,7 @@ const collapseWidth = computed(() => (store.collapse ? ' w-20' : 'w-64'))
   >
     <div class="mt-16">
       <ul class="">
-        <layout-menu-item v-for="route in asyncRoutes" :menu="route"></layout-menu-item>
+        <layout-menu-item v-for="route in store.asyncRoutes" :menu="route"></layout-menu-item>
       </ul>
     </div>
   </nav>

@@ -7,13 +7,6 @@ const router = createRouter({
   routes: constantRoutes
 })
 
-router.beforeEach(async (to) => {
-  const token = fetachAccessToken()
-  if (token) {
-    if (to.name === 'Login') return { path: '/', replace: true }
-  } else {
-    if (to.name !== 'Login') return { name: 'Login', replace: true }
-  }
-})
+
 
 export default router

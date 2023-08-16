@@ -32,17 +32,7 @@ const visible = ref(true)
 const handleLogin = () => {
   login(login_request.value).then((res) => {
     storeAccessToken(res.access_token)
-    
-    getAsyncRoutes().then((routes) => {
-      const newRoutes = generateRoutes(routes)
-      newRoutes.forEach((route) => {
-        console.log(route)
-        router.addRoute(route)
-      })
-
-      console.log(router.getRoutes())
-      router.replace({ path: '/', replace: true })
-    })
+    router.replace({ path: '/', replace: true })
   })
 }
 </script>
