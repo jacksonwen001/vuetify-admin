@@ -2,7 +2,6 @@
 import LayoutMenuItem from './LayoutMenuItem.vue'
 import { useLayoutStore } from '@/stores/layout'
 import { computed } from 'vue'
-import { useRouter } from 'vue-router';
 
 const store = useLayoutStore()
 const collapseWidth = computed(() => (store.collapse ? ' w-20' : 'w-64'))
