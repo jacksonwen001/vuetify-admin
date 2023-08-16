@@ -1,4 +1,6 @@
+import type { RouteType } from '@/router/routes'
 import api from '@/utils/request'
+import Layout from '@/layouts/index.vue'
 
 export interface LgoinRequest {
   username: string
@@ -24,3 +26,10 @@ export const getChartData = async () => {
   const { data } = await api.get('/charts')
   return data
 }
+
+export const getAsyncRoutes = async (): Promise<any[]> => {
+  const { data } = await api.get('/menus')
+  return data
+}
+
+

@@ -2,6 +2,7 @@
 import { MockedRequest, RestHandler, rest, type DefaultBodyType } from 'msw'
 import { login_response } from './data/login'
 import { chartData } from './data/chart'
+import { asyncRoutes } from './data/menus'
 
 export const handlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
   rest.post('/login', (req, res, ctx) => {
@@ -16,13 +17,19 @@ export const handlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
   }),
 
   rest.get('/message', (req, res, ctx) => {
-    return res(ctx.json({"message": 'you have created one api and mount it into page. congratulations.'}))
-  }), 
+    return res(
+      ctx.json({ message: 'you have created one api and mount it into page. congratulations.' })
+    )
+  }),
 
   rest.get('/charts', (req, res, ctx) => {
     return res(ctx.json(chartData))
-  }), 
-  
+  }),
+
+  rest.get('/menus', (req, res, ctx) => {
+    return res(ctx.json(asyncRoutes))
+  }),
+
   rest.get('/user', (req, res, ctx) => {
     // Check if the user is authenticated in this session
     const isAuthenticated = sessionStorage.getItem('is-authenticated')
@@ -32,16 +39,16 @@ export const handlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
       return res(
         ctx.status(403),
         ctx.json({
-          errorMessage: 'Not authorized',
-        }),
+          errorMessage: 'Not authorized'
+        })
       )
     }
     // If authenticated, return a mocked user details
     return res(
       ctx.status(200),
       ctx.json({
-        username: 'admin',
-      }),
+        username: 'admin'
+      })
     )
-  }),
+  })
 ]

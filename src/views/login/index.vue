@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { login, type LgoinRequest } from '@/apis/login'
+import Layout from '@/layouts/index.vue'
+import { login, type LgoinRequest, getAsyncRoutes } from '@/apis/login'
 import { useUserStore } from '@/stores/user'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { storeAccessToken } from '@/utils/token'
+import { generateRoutes } from '@/utils/routes'
 
 const router = useRouter()
 const store = useUserStore()
@@ -26,13 +29,20 @@ const password_rules = ref([
 ])
 
 const visible = ref(true)
-
 const handleLogin = () => {
   login(login_request.value).then((res) => {
-    store.setAccessToken(res.access_token)
-    store.setUsername(login_request.value.username)
-    store.setAvatar(res.avatar)
-    router.replace('/')
+    storeAccessToken(res.access_token)
+    
+    getAsyncRoutes().then((routes) => {
+      const newRoutes = generateRoutes(routes)
+      newRoutes.forEach((route) => {
+        console.log(route)
+        router.addRoute(route)
+      })
+
+      console.log(router.getRoutes())
+      router.replace({ path: '/', replace: true })
+    })
   })
 }
 </script>
@@ -85,6 +95,3 @@ const handleLogin = () => {
     </v-card>
   </div>
 </template>
-
-<style></style>
-@/views/login/apis/login
